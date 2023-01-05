@@ -11,3 +11,5 @@
 
 build/
 dispatcher-layer/build
+
+dispatcher-layer/src/main/resources/botConfig.properties
