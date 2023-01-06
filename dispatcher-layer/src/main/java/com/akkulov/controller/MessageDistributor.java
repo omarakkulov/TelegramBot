@@ -19,6 +19,11 @@ public class MessageDistributor {
   private final UpdateProducer updateProducer;
   private final RabbitQueueProperties rabbitQueueProperties;
 
+  /**
+   * Заинжектить ссылку телеграм-бота.
+   *
+   * @param telegramBot ссылку телеграм-бота
+   */
   public void registerBot(TelegramBot telegramBot) {
     this.telegramBot = telegramBot;
   }
