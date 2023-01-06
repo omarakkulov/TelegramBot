@@ -12,4 +12,4 @@
 build/
 dispatcher-layer/build
 
-dispatcher-layer/src/main/resources/botConfig.properties
+common-rabbitmq/src/main/resources/botConfig.properties
