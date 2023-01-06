@@ -30,7 +30,7 @@ public class MessageDistributor {
    */
   public void processMessage(Update update) {
     if (update.getEditedMessage() != null) {
-      var sendMessage = MessageUtils.sendMessageWithText(update, "Не редачь сообщения, убьет!");
+      final var sendMessage = MessageUtils.sendMessageWithText(update, "Не редачь сообщения, убьет!");
       sendAnswerToUser(sendMessage);
       return;
     }
@@ -44,7 +44,7 @@ public class MessageDistributor {
 
   private void processTextMessage(Update update) {
     updateProducer.produce(rabbitQueueProperties.getTextMessageUpdateQueueName(), update);
-    var sendMessage = MessageUtils.sendMessageWithText(update, update.getMessage().getText());
+    final var sendMessage = MessageUtils.sendMessageWithText(update, update.getMessage().getText());
     sendAnswerToUser(sendMessage);
   }
 
@@ -54,7 +54,7 @@ public class MessageDistributor {
    * @param update сообщение
    */
   private void processUnsupportedMessageType(Update update) {
-    var sendMessage = MessageUtils.sendMessageWithText(update, "Неподдерживаемый вид сообщения!");
+    final var sendMessage = MessageUtils.sendMessageWithText(update, "Неподдерживаемый вид сообщения!");
     sendAnswerToUser(sendMessage);
   }
 

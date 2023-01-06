@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DispatcherLayerTelegramBotApplication {
+public class TelegramBotApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(DispatcherLayerTelegramBotApplication.class, args);
+    SpringApplication.run(TelegramBotApplication.class, args);
   }
 }
