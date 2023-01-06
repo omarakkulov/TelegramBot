@@ -2,22 +2,23 @@ package com.akkulov.bot;
 
 import com.akkulov.controller.MessageDistributor;
 import com.akkulov.properties.TelegramBotProperties;
-import javax.annotation.PostConstruct;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+/**
+ * Класс телеграм-бота.
+ */
 @Slf4j
 @Getter
 @Setter
 @Component
-@RequiredArgsConstructor
 public class TelegramBot extends TelegramLongPollingBot {
 
   /**
@@ -31,11 +32,17 @@ public class TelegramBot extends TelegramLongPollingBot {
   private final MessageDistributor messageDistributor;
 
   /**
-   * Внедрить ссылку бота в MessageDistributor.
+   * TelegramBot.
+   *
+   * @param telegramBotProperties TelegramBotProperties
+   * @param messageDistributor    MessageDistributor
    */
-  @PostConstruct
-  private void initializeMessageDistributor() {
-    messageDistributor.registerBot(this);
+  @Autowired
+  public TelegramBot(TelegramBotProperties telegramBotProperties,
+      MessageDistributor messageDistributor) {
+    this.telegramBotProperties = telegramBotProperties;
+    this.messageDistributor = messageDistributor;
+    this.messageDistributor.registerBot(this);
   }
 
   /**
