@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+/**
+ * Распределитель сообщений по очередям.
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -31,12 +34,15 @@ public class MessageDistributor {
   /**
    * Обработать входящее сообщение.
    *
-   * @param update входящее сообщение
+   * @param update входящее сообщение (апдейт)
    */
   public void processMessage(Update update) {
     if (update.getEditedMessage() != null) {
-      final var sendMessage = MessageUtils.sendMessageWithText(update, "Не редачь сообщения, убьет!");
-      sendAnswerToUser(sendMessage);
+      final var sendMessage = MessageUtils.sendMessageWithText(update,
+          "Не редачь сообщения, убьет!"
+      );
+
+      sendResponseMessageToUser(sendMessage);
       return;
     }
 
@@ -47,20 +53,28 @@ public class MessageDistributor {
     processTextMessage(update);
   }
 
+  /**
+   * Обработать текстовое сообщение.
+   *
+   * @param update апдейт
+   */
   private void processTextMessage(Update update) {
     updateProducer.produce(rabbitQueueProperties.getTextMessageUpdateQueueName(), update);
     final var sendMessage = MessageUtils.sendMessageWithText(update, update.getMessage().getText());
-    sendAnswerToUser(sendMessage);
+    sendResponseMessageToUser(sendMessage);
   }
 
   /**
    * Обработать неподдерживаемый вид сообщения.
    *
-   * @param update сообщение
+   * @param update апдейт
    */
   private void processUnsupportedMessageType(Update update) {
-    final var sendMessage = MessageUtils.sendMessageWithText(update, "Неподдерживаемый вид сообщения!");
-    sendAnswerToUser(sendMessage);
+    final var sendMessage = MessageUtils.sendMessageWithText(update,
+        "Неподдерживаемый вид сообщения!"
+    );
+
+    sendResponseMessageToUser(sendMessage);
   }
 
   /**
@@ -68,7 +82,7 @@ public class MessageDistributor {
    *
    * @param sendMessage ответ пользователю
    */
-  private void sendAnswerToUser(SendMessage sendMessage) {
-    telegramBot.sendAnswerToUser(sendMessage);
+  private void sendResponseMessageToUser(SendMessage sendMessage) {
+    telegramBot.sendResponse(sendMessage);
   }
 }
