@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * Пропертя с названиями очередей.
+ */
 @Getter
 @Setter
 @PropertySource("classpath:rabbit-queue.properties")
@@ -12,4 +15,5 @@ import org.springframework.context.annotation.PropertySource;
 public class RabbitQueueProperties {
 
   private String textMessageUpdateQueueName;
+  private String answerMessageQueueName;
 }

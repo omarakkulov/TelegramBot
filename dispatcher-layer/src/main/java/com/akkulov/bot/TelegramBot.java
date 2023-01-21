@@ -48,7 +48,7 @@ public class TelegramBot extends TelegramLongPollingBot {
   /**
    * Получить сообщение от пользователя.
    *
-   * @param update Update received
+   * @param update входящее сообщение (апдейт)
    */
   @Override
   public void onUpdateReceived(Update update) {
@@ -73,7 +73,7 @@ public class TelegramBot extends TelegramLongPollingBot {
    *
    * @param sendMessage ответ пользователю
    */
-  public void sendAnswerToUser(SendMessage sendMessage) {
+  public void sendResponse(SendMessage sendMessage) {
     try {
       execute(sendMessage);
       log.info("Successfully sent response to user");
